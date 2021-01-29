@@ -1,12 +1,9 @@
 #shape1 {
-  /* background-color: red; */
   background-image: url(../resource/shape.png);
   background-size: cover;
-  /* background-color: purple; */
-  width: 200px;
-  height: 200px;
+  width: 519px;
+  height: 379px;
   position: absolute;
   left: 500px;
   top: 10px;
-  transform: rotate(90deg);
 }
