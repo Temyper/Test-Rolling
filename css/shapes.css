@@ -2,7 +2,10 @@
   /* background-color: red; */
   background-image: url(../resource/shape.png);
   background-size: cover;
-  background-color: purple;
+  /* background-color: purple; */
   width: 200px;
   height: 200px;
+  position: absolute;
+  left: 500px;
+  top: 10px;
 }
