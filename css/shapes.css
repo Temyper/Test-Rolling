@@ -8,4 +8,5 @@
   position: absolute;
   left: 500px;
   top: 10px;
+  transform: rotate(90deg);
 }
