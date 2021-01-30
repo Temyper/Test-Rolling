@@ -5,6 +5,8 @@
 class Shape {
   #shape = null;
 
+  #patternOfPX = /^-?\d{1,}px/;
+
   constructor(shape) {
     this.#shape = shape;
   }
@@ -14,23 +16,41 @@ class Shape {
   }
 
   set X(value) {
+    if (!this.TestForPX(value.toString())) {
+      console.log(
+        `${value} isn't appropriate for ${this.X.name} that this isn't "integer'px'" `
+      );
+      return;
+    }
     this.#shape.css({
       left: `${value}`
     });
   }
 
   set Y(value) {
+    if (!this.TestForPX(value.toString())) {
+      console.log(
+        `${value} isn't appropriate for ${this.Y.name} that this isn't "integer'px'" `
+      );
+      return;
+    }
     this.#shape.css({
       top: `${value}`
     });
   }
 
+  // 戻り値の末尾はpxがある
   get X() {
     return parseInt(this.#shape.css("left"));
   }
 
+  // 戻り値の末尾はpxがある
   get Y() {
     return parseInt(this.#shape.css("top"));
+  }
+
+  TestForPX(string) {
+    return this.#patternOfPX.test(string);
   }
 }
 
