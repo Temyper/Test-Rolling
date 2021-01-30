@@ -3,7 +3,8 @@
   background-size: cover;
   width: 519px;
   height: 379px;
-  position: absolute;
+  /* 202101230absoluteにすると、他の要素と座標を鬩ぎ合う */
+  position: relative;
   left: 500px;
-  top: 10px;
+  top: -300px;
 }

@@ -8,6 +8,10 @@ a {
   text-decoration: none;
 }
 
+body {
+  background-color: rgb(127, 68, 236);
+}
+
 header {
   background-color: orange;
   height: 10%;
