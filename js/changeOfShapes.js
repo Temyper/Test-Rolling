@@ -11,14 +11,10 @@ class Shape {
     this.#shape = shape;
   }
 
-  get Item() {
-    return this.#shape;
-  }
-
   set Left(value) {
     if (!this.#TestForPX(value.toString())) {
       console.log(
-        `${value} isn't appropriate for ${this.X.name} that this isn't "integer'px'" `
+        `${value} isn't appropriate for ${this.Left.name} that this isn't "integer'px'" `
       );
       return;
     }
@@ -30,7 +26,7 @@ class Shape {
   set Top(value) {
     if (!this.#TestForPX(value.toString())) {
       console.log(
-        `${value} isn't appropriate for ${this.Y.name} that this isn't "integer'px'" `
+        `${value} isn't appropriate for ${this.Top.name} that this isn't "integer'px'" `
       );
       return;
     }
@@ -49,35 +45,28 @@ class Shape {
     return this.#shape.css("top");
   }
 
-  // 弧度
   Rotate(angle) {
     // 20210201負の値でも正しく余りが出る（ex:(-361) % 360 = -1）
-    angle %= 360;
     this.#shape.css({ transform: `rotate(${angle}deg)` });
   }
 
-  // 20210201コールバック関数がprivateなメンバーを参照できる非同期メソッド。setIntervalはwindowオブジェクトに属するので、外部のオブジェクトのprivateなメンバーを参照できない。
+  // 20210201コールバック関数がprivateなメンバーを参照できる非同期メソッド。setIntervalはwindowオブジェクトに属するので、windowオブジェクトの外部のオブジェクトのprivateなメンバーを参照できない。
   async RotateInfinitely(angle) {
     if (angle == 0) return;
-    else if (angle > 0) {
-      while (true) {
-        this.Rotate(angle);
-        angle++;
-        await this.#Sleep(50);
-      }
-    } else {
-      while (true) {
-        this.Rotate(angle);
-        angle--;
-        await this.#Sleep(50);
-      }
+
+    let totalAngle = angle;
+    while (true) {
+      totalAngle %= 360;
+      this.Rotate(totalAngle);
+      totalAngle += angle;
+      await this.#Sleep(50);
     }
   }
 
   Move(plusX, plusY) {
     // parseIntだけでpxが外れ整数値を求められる
-    this.Left = `${parseInt(this.Left) - plusX}px`;
-    this.Top = `${parseInt(this.Top) - plusY}px`;
+    this.Left = `${parseInt(this.Left) + plusX}px`;
+    this.Top = `${parseInt(this.Top) + plusY}px`;
   }
 
   async MoveInfinitely(plusX, plusY) {

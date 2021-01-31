@@ -5,8 +5,8 @@
   height: 379px;
   /* 202101230absoluteにすると、他の要素と座標を鬩ぎ合う */
   position: relative;
-  left: 500px;
-  top: -300px;
+  left: 0px;
+  top: -1000px;
 }
 
 #shape2 {
@@ -16,6 +16,6 @@
   height: 100px;
   /* 202101230absoluteにすると、他の要素と座標を鬩ぎ合う */
   position: relative;
-  left: 0px;
-  top: -1000px;
+  left: 500px;
+  top: -500px;
 }
