@@ -51,16 +51,26 @@ class Shape {
 
   // 弧度
   Rotate(angle) {
+    // 20210201負の値でも正しく余りが出る（ex:(-361) % 360 = -1）
     angle %= 360;
     this.#shape.css({ transform: `rotate(${angle}deg)` });
   }
 
   // 20210201コールバック関数がprivateなメンバーを参照できる非同期メソッド。setIntervalはwindowオブジェクトに属するので、外部のオブジェクトのprivateなメンバーを参照できない。
   async RotateInfinitely(angle) {
-    while (true) {
-      this.Rotate(angle);
-      angle++;
-      await this.#Sleep(50);
+    if (angle == 0) return;
+    else if (angle > 0) {
+      while (true) {
+        this.Rotate(angle);
+        angle++;
+        await this.#Sleep(50);
+      }
+    } else {
+      while (true) {
+        this.Rotate(angle);
+        angle--;
+        await this.#Sleep(50);
+      }
     }
   }
 
@@ -89,7 +99,12 @@ class Shape {
   }
 }
 
-let shape = new Shape($("#shape1"));
+let shape1 = new Shape($("#shape1"));
 
-shape.RotateInfinitely(1);
-shape.MoveInfinitely(2, 1);
+shape1.RotateInfinitely(1);
+shape1.MoveInfinitely(2, 1);
+
+let shape2 = new Shape($("#shape2"));
+
+shape2.RotateInfinitely(-1);
+shape2.MoveInfinitely(-1, -2);
