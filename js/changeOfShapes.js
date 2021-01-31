@@ -15,8 +15,8 @@ class Shape {
     return this.#shape;
   }
 
-  set X(value) {
-    if (!this.TestForPX(value.toString())) {
+  set Left(value) {
+    if (!this.#TestForPX(value.toString())) {
       console.log(
         `${value} isn't appropriate for ${this.X.name} that this isn't "integer'px'" `
       );
@@ -27,8 +27,8 @@ class Shape {
     });
   }
 
-  set Y(value) {
-    if (!this.TestForPX(value.toString())) {
+  set Top(value) {
+    if (!this.#TestForPX(value.toString())) {
       console.log(
         `${value} isn't appropriate for ${this.Y.name} that this isn't "integer'px'" `
       );
@@ -40,47 +40,43 @@ class Shape {
   }
 
   // 戻り値の末尾はpxがある
-  get X() {
+  get Left() {
     return parseInt(this.#shape.css("left"));
   }
 
   // 戻り値の末尾はpxがある
-  get Y() {
+  get Top() {
     return parseInt(this.#shape.css("top"));
   }
 
-  TestForPX(string) {
+  #TestForPX(string) {
     return this.#patternOfPX.test(string);
   }
 }
 
 let shape = new Shape($("#shape1"));
 
-let plusX = 2;
-let plusY = 1;
-
-let count = 0;
-
 $(function AddRotation() {
-  function Rotation(shape, count) {
-    count %= 360;
-    shape.Item.css({ transform: `rotate(${count}deg)` });
-    count++;
+  // 弧度
+  function Rotation(shape, angle) {
+    angle %= 360;
+    shape.Item.css({ transform: `rotate(${angle}deg)` });
+    angle++;
     setTimeout(function () {
-      Rotation(shape, count);
+      Rotation(shape, angle);
     }, 50);
   }
 
   function Movement(shape, plusX, plusY) {
     // parseIntだけでpxが外れ整数値を求められる
-    shape.X = `${parseInt(shape.X) - plusX}px`;
-    shape.Y = `${parseInt(shape.Y) - plusY}px`;
+    shape.Left = `${parseInt(shape.Left) - plusX}px`;
+    shape.Top = `${parseInt(shape.Top) - plusY}px`;
     // count++;
     setTimeout(function () {
       Movement(shape, plusX, plusY);
     }, 50);
   }
 
-  setTimeout(Rotation, 50, shape, count);
-  setTimeout(Movement, 50, shape, plusX, plusY);
+  setTimeout(Rotation, 50, shape, 0);
+  setTimeout(Movement, 50, shape, 2, 1);
 });

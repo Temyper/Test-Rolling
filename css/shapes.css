@@ -8,3 +8,14 @@
   left: 500px;
   top: -300px;
 }
+
+#shape2 {
+  background-image: url(../resource/shape2.png);
+  background-size: cover;
+  width: 250px;
+  height: 100px;
+  /* 202101230absoluteにすると、他の要素と座標を鬩ぎ合う */
+  position: relative;
+  left: 0px;
+  top: -1000px;
+}
