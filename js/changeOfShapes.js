@@ -41,12 +41,47 @@ class Shape {
 
   // 戻り値の末尾はpxがある
   get Left() {
-    return parseInt(this.#shape.css("left"));
+    return this.#shape.css("left");
   }
 
   // 戻り値の末尾はpxがある
   get Top() {
-    return parseInt(this.#shape.css("top"));
+    return this.#shape.css("top");
+  }
+
+  // 弧度
+  Rotate(angle) {
+    angle %= 360;
+    this.#shape.css({ transform: `rotate(${angle}deg)` });
+  }
+
+  // 20210201コールバック関数がprivateなメンバーを参照できる非同期メソッド。setIntervalはwindowオブジェクトに属するので、外部のオブジェクトのprivateなメンバーを参照できない。
+  async RotateInfinitely(angle) {
+    while (true) {
+      this.Rotate(angle);
+      angle++;
+      await this.#Sleep(50);
+    }
+  }
+
+  Move(plusX, plusY) {
+    // parseIntだけでpxが外れ整数値を求められる
+    this.Left = `${parseInt(this.Left) - plusX}px`;
+    this.Top = `${parseInt(this.Top) - plusY}px`;
+  }
+
+  async MoveInfinitely(plusX, plusY) {
+    while (true) {
+      this.Move(plusX, plusY);
+      await this.#Sleep(50);
+    }
+  }
+
+  // 20210201privateなメンバーを参照できる、時間指定用非同期実行メソッド。setIntervalではコールバック関数がprivateなメンバーを参照できない。
+  #Sleep(seconds) {
+    return new Promise(resolve => {
+      setTimeout(resolve, seconds);
+    });
   }
 
   #TestForPX(string) {
@@ -56,27 +91,5 @@ class Shape {
 
 let shape = new Shape($("#shape1"));
 
-$(function AddRotation() {
-  // 弧度
-  function Rotation(shape, angle) {
-    angle %= 360;
-    shape.Item.css({ transform: `rotate(${angle}deg)` });
-    angle++;
-    setTimeout(function () {
-      Rotation(shape, angle);
-    }, 50);
-  }
-
-  function Movement(shape, plusX, plusY) {
-    // parseIntだけでpxが外れ整数値を求められる
-    shape.Left = `${parseInt(shape.Left) - plusX}px`;
-    shape.Top = `${parseInt(shape.Top) - plusY}px`;
-    // count++;
-    setTimeout(function () {
-      Movement(shape, plusX, plusY);
-    }, 50);
-  }
-
-  setTimeout(Rotation, 50, shape, 0);
-  setTimeout(Movement, 50, shape, 2, 1);
-});
+shape.RotateInfinitely(1);
+shape.MoveInfinitely(2, 1);
